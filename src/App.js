@@ -53,77 +53,70 @@
 
 
 
-
-
-
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
 
 const App = () => {
-  const [matchInfo, setMatchInfo] = useState(null);
+  const [matchData, setMatchData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMatchInfo = async () => {
-      try {
-        const response = await fetch(
-          'https://api.cricapi.com/v1/match_info?apikey=65610262-566e-454a-8ca4-00b21a828b47&offset=0&id=820cfd88-3b56-4a6e-9dd8-1203051140da',
-          {
-            method: 'GET',
-            headers: {
-              'x-rapidapi-host': 'cricket-live-line1.p.rapidapi.com',
-              'x-rapidapi-key': '65610262-566e-454a-8ca4-00b21a828b47',
-            },
-          }
-        );
+    const fetchMatchData = async () => {
+      const url = "https://api.cricapi.com/v1/match_info";
+      const apiKey = "65610262-566e-454a-8ca4-00b21a828b47";
+      const matchId = "820cfd88-3b56-4a6e-9dd8-1203051140da";
+      const requestUrl = `${url}?apikey=${apiKey}&offset=0&id=${matchId}`;
 
+      try {
+        const response = await fetch(requestUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        const data = await response.json();
-        setMatchInfo(data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching match info:', err);
-        setError('Failed to fetch the match information.');
+        const result = await response.json();
+        setMatchData(result.data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchMatchInfo();
+    fetchMatchData();
   }, []);
 
   if (loading) {
-    return <p>Loading match information...</p>;
+    return <div className="app">Loading match details...</div>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <div className="app">Error: {error}</div>;
   }
 
   return (
     <div className="app">
       <div className="card">
-        <h2>Match Information</h2>
-        {matchInfo && (
-          <div>
-            <p><strong>Match:</strong> {matchInfo.matchTitle}</p>
-            <p><strong>Teams:</strong> {matchInfo.team1.name} vs {matchInfo.team2.name}</p>
-            <p><strong>Venue:</strong> {matchInfo.venue}</p>
-            <p><strong>Status:</strong> {matchInfo.matchStatus}</p>
+        <h2>{matchData.name}</h2>
+        <p><strong>Match Type:</strong> {matchData.matchType}</p>
+        <p><strong>Status:</strong> {matchData.status}</p>
+        <p><strong>Venue:</strong> {matchData.venue}</p>
+        <p><strong>Date:</strong> {new Date(matchData.date).toLocaleDateString()}</p>
+        <p><strong>Toss Winner:</strong> {matchData.tossWinner} ({matchData.tossChoice})</p>
+        <p><strong>Match Winner:</strong> {matchData.matchWinner}</p>
+
+        <h3>Scores:</h3>
+        {matchData.score.map((inning, index) => (
+          <div key={index}>
+            <p><strong>{inning.inning}</strong></p>
+            <p>Runs: {inning.r}, Wickets: {inning.w}, Overs: {inning.o}</p>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
 };
 
 export default App;
-
-
-
 
 
 
