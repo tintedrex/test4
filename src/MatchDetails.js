@@ -1,27 +1,34 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./App.css";
 
 const MatchDetails = () => {
-  const matchDetails = {
-    matchTitle: "India vs Pakistan",
-    team1: { name: "India" },
-    team2: { name: "Pakistan" },
-    venue: "Dubai International Cricket Stadium",
-    matchStatus: "Live",
-    matchDate: "December 25, 2024",
-    score: "India: 120/3 (15 overs) | Pakistan: 100/4 (14 overs)",
-    additionalInfo: "India is currently leading the match with 20 runs."
-  };
+  const location = useLocation();
+  const matchData = location.state?.matchData;
+
+  if (!matchData) {
+    return <div className="app">No match details available.</div>;
+  }
 
   return (
-    <div className="details-container">
-      <h2>{matchDetails.matchTitle} - Match Details</h2>
-      <p><strong>Teams:</strong> {matchDetails.team1.name} vs {matchDetails.team2.name}</p>
-      <p><strong>Venue:</strong> {matchDetails.venue}</p>
-      <p><strong>Status:</strong> {matchDetails.matchStatus}</p>
-      <p><strong>Match Date:</strong> {matchDetails.matchDate}</p>
-      <p><strong>Score:</strong> {matchDetails.score}</p>
-      <p><strong>Additional Info:</strong> {matchDetails.additionalInfo}</p>
+    <div className="app">
+      <div className="details-container">
+        <h2>{matchData.name}</h2>
+        <p><strong>Match Type:</strong> {matchData.matchType}</p>
+        <p><strong>Status:</strong> {matchData.status}</p>
+        <p><strong>Venue:</strong> {matchData.venue}</p>
+        <p><strong>Date:</strong> {new Date(matchData.date).toLocaleDateString()}</p>
+        <p><strong>Toss Winner:</strong> {matchData.tossWinner} ({matchData.tossChoice})</p>
+        <p><strong>Match Winner:</strong> {matchData.matchWinner}</p>
+
+        <h3>Scores:</h3>
+        {matchData.score.map((inning, index) => (
+          <div key={index}>
+            <p><strong>{inning.inning}</strong></p>
+            <p>Runs: {inning.r}, Wickets: {inning.w}, Overs: {inning.o}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
