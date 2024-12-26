@@ -1,14 +1,19 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 
 const MatchDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const matchData = location.state?.matchData;
 
   if (!matchData) {
     return <div className="app">No match details available.</div>;
   }
+
+  const handleBackClick = () => {
+    navigate('/');
+  };
 
   return (
     <div className="app">
@@ -28,6 +33,8 @@ const MatchDetails = () => {
             <p>Runs: {inning.r}, Wickets: {inning.w}, Overs: {inning.o}</p>
           </div>
         ))}
+        
+        <button onClick={handleBackClick} className="back-button">Back</button>
       </div>
     </div>
   );

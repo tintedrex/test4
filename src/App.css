@@ -79,3 +79,17 @@ body {
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #ff4500;
+}
