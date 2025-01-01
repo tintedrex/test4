@@ -18,21 +18,50 @@ const MatchDetails = () => {
   return (
     <div className="app">
       <div className="details-container">
-        <h2>{matchData.name}</h2>
-        <p><strong>Match Type:</strong> {matchData.matchType}</p>
+        <h2>{matchData.seriesName}</h2>
+        <p><strong>Match Description:</strong> {matchData.matchDesc}</p>
+        <p><strong>Match Format:</strong> {matchData.matchFormat}</p>
         <p><strong>Status:</strong> {matchData.status}</p>
-        <p><strong>Venue:</strong> {matchData.venue}</p>
-        <p><strong>Date:</strong> {new Date(matchData.date).toLocaleDateString()}</p>
-        <p><strong>Toss Winner:</strong> {matchData.tossWinner} ({matchData.tossChoice})</p>
-        <p><strong>Match Winner:</strong> {matchData.matchWinner}</p>
+        <p><strong>Venue:</strong> {matchData.venueInfo.ground}, {matchData.venueInfo.city}</p>
+        <p><strong>Date:</strong> {new Date(parseInt(matchData.startDate)).toLocaleDateString()}</p>
 
         <h3>Scores:</h3>
-        {matchData.score.map((inning, index) => (
-          <div key={index}>
-            <p><strong>{inning.inning}</strong></p>
-            <p>Runs: {inning.r}, Wickets: {inning.w}, Overs: {inning.o}</p>
+        {matchData.matchScore && (
+          <div className="score-details">
+            {matchData.matchScore.team1Score?.inngs1 && (
+              <div>
+                <h4>{matchData.team1.teamName} - 1st Innings</h4>
+                <p>Runs: {matchData.matchScore.team1Score.inngs1.runs}</p>
+                <p>Wickets: {matchData.matchScore.team1Score.inngs1.wickets}</p>
+                <p>Overs: {matchData.matchScore.team1Score.inngs1.overs}</p>
+              </div>
+            )}
+            {matchData.matchScore.team1Score?.inngs2 && (
+              <div>
+                <h4>{matchData.team1.teamName} - 2nd Innings</h4>
+                <p>Runs: {matchData.matchScore.team1Score.inngs2.runs}</p>
+                <p>Wickets: {matchData.matchScore.team1Score.inngs2.wickets}</p>
+                <p>Overs: {matchData.matchScore.team1Score.inngs2.overs}</p>
+              </div>
+            )}
+            {matchData.matchScore.team2Score?.inngs1 && (
+              <div>
+                <h4>{matchData.team2.teamName} - 1st Innings</h4>
+                <p>Runs: {matchData.matchScore.team2Score.inngs1.runs}</p>
+                <p>Wickets: {matchData.matchScore.team2Score.inngs1.wickets}</p>
+                <p>Overs: {matchData.matchScore.team2Score.inngs1.overs}</p>
+              </div>
+            )}
+            {matchData.matchScore.team2Score?.inngs2 && (
+              <div>
+                <h4>{matchData.team2.teamName} - 2nd Innings</h4>
+                <p>Runs: {matchData.matchScore.team2Score.inngs2.runs}</p>
+                <p>Wickets: {matchData.matchScore.team2Score.inngs2.wickets}</p>
+                <p>Overs: {matchData.matchScore.team2Score.inngs2.overs}</p>
+              </div>
+            )}
           </div>
-        ))}
+        )}
         
         <button onClick={handleBackClick} className="back-button">Back</button>
       </div>

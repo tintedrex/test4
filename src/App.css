@@ -1,51 +1,87 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background-image: url('https://images.unsplash.com/photo-1594470117722-de4b9a02ebed?q=80&w=3829&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .app {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100vh;
-  margin: 0;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background: url('https://images.unsplash.com/photo-1594470117722-de4b9a02ebed?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNyaWNrZXQlMjBzdGFkaXVtfGVufDB8fDB8fHww');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px 10px;
+  padding: 0px;
+  /* max-width: 1400px; */
+  margin: 0 auto;
+  width: 100%;
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
   border-radius: 15px;
-  width: 400px;
   padding: 20px;
   color: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  margin: auto;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  margin-bottom: 20px;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  cursor: pointer;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .card h2 {
-  font-size: 2rem;
-  margin-bottom: 50px;
-  color: #ff6347; 
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #fff;
 }
 
 .card p {
-  font-size: 1.2rem;
-  margin: 5px 0;
+  margin: 8px 0;
+  font-size: 0.9rem;
 }
 
 .card strong {
   color: #ffd700;
+}
+
+.score-details {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.score-details h4 {
+  font-size: 1.2rem;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.score-details p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .details-container {
