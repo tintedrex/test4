@@ -19,6 +19,7 @@ const MatchDetails = () => {
     <div className="app">
       <div className="details-container">
         <h2>{matchData.seriesName}</h2>
+        <h2>{matchData.team1.teamName} <strong>vs</strong> {matchData.team2.teamName}</h2>
         <p><strong>Match Description:</strong> {matchData.matchDesc}</p>
         <p><strong>Match Format:</strong> {matchData.matchFormat}</p>
         <p><strong>Status:</strong> {matchData.status}</p>

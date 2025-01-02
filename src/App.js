@@ -73,6 +73,7 @@ const App = () => {
           matches.map((match, index) => (
             <div key={index} className="card" onClick={() => handleCardClick(match)}>
               <h2>{match.seriesName}</h2>
+              <h2>{match.team1.teamName} <strong>vs</strong> {match.team2.teamName}</h2>
               <p><strong>Match Description:</strong> {match.matchDesc}</p>
               <p><strong>Match Format:</strong> {match.matchFormat}</p>
               <p><strong>Status:</strong> {match.status}</p>
